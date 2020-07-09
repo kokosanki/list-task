@@ -1,17 +1,25 @@
 <template>
-  <div class="home">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <ol>
+      <li v-for="item in 10" :key="item">
+        <router-link :to="`/article/${item}`">Jump to {{ item }}</router-link>
+      </li>
+    </ol>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld,
+  data() {
+    return {};
   },
 };
 </script>
+
+<style scoped lang="scss">
+li {
+  text-align: left;
+}
+</style>
