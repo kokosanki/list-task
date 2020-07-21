@@ -22,4 +22,6 @@ const router = new VueRouter({
   routes,
 });
 
+router.replace('/article/1');
+
 export default router;
