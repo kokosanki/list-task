@@ -1,7 +1,7 @@
 <template>
   <div>
       <v-icon @click="drawer = !drawer" color="pink">dehaze</v-icon>
-    <v-navigation-drawer v-model="drawer"
+    <v-navigation-drawer temporary v-model="drawer"
         color="pink"
         absolute
         dark>
