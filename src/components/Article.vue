@@ -4,8 +4,8 @@
       <h2 class="text-center">{{ $route.params.id }}</h2>
       <LoremIpsum add="1p" />
       <div class="d-flex flex-row justify-space-between">
-        <v-icon color="pink" @click="$router.go(-1)" large>keyboard_backspace</v-icon>
-        <v-icon color="pink" @click="$router.replace('/')" large>home</v-icon>
+        <v-icon color="#29006b" @click="$router.go(-1)" large>keyboard_backspace</v-icon>
+        <v-icon color="#29006b" @click="$router.push('/')" large>home</v-icon>
       </div>
     </div>
   </v-container>
