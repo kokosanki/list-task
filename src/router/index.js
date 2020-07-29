@@ -5,6 +5,8 @@ import Article from '../components/Article.vue';
 
 Vue.use(VueRouter);
 
+let isFirstTransition = true;
+
 const routes = [
   {
     path: '/',
@@ -22,6 +24,40 @@ const router = new VueRouter({
   routes,
 });
 
-router.replace('/article/1');
+const MAX_TIME_TO_RETURN = 10 * 1000;
+const LS_ROUTE_KEY = 'example:route';
+const LS_LAST_ACTIVITY_AT_KEY = 'example:last-active-at';
+const setLastActivity = () => {
+  localStorage.setItem(LS_LAST_ACTIVITY_AT_KEY, Date.now());
+};
+
+const getLastActivity = () => localStorage.getItem(LS_LAST_ACTIVITY_AT_KEY);
+
+router.beforeEach((to, from, next) => {
+  const lastRouteName = localStorage.getItem(LS_ROUTE_KEY);
+  const lastActivityAt = getLastActivity();
+
+  const hasBeenActiveRecently = Boolean(
+    lastActivityAt && Date.now() - Number(lastActivityAt) < MAX_TIME_TO_RETURN,
+  );
+
+  const shouldRedirect = Boolean(
+    to.path === '/' && isFirstTransition && lastRouteName && hasBeenActiveRecently,
+  );
+
+  if (shouldRedirect) {
+    isFirstTransition = false;
+    router.replace(lastRouteName);
+  } else {
+    next();
+  }
+
+  isFirstTransition = false;
+});
+
+router.afterEach((to) => {
+  localStorage.setItem(LS_ROUTE_KEY, to.path);
+  setLastActivity();
+});
 
 export default router;

@@ -11,9 +11,9 @@
       </v-toolbar-items>
     </v-toolbar>
     <!-- mb -->
-    <v-icon class="hidden-sm-and-up" @click="drawer = !drawer" color="#29006b">dehaze</v-icon>
+    <v-icon class="hidden-md-and-up" @click="drawer = !drawer" color="#29006b">dehaze</v-icon>
     <v-navigation-drawer
-      class="hidden-sm-and-up"
+      class="hidden-md-and-up"
       temporary
       v-model="drawer"
       color="#29006b"
