@@ -24,7 +24,7 @@ const router = new VueRouter({
   routes,
 });
 
-const MAX_TIME_TO_RETURN = 10 * 1000;
+const MAX_TIME_TO_RETURN = 1200 * 1000;
 const LS_ROUTE_KEY = 'example:route';
 const LS_LAST_ACTIVITY_AT_KEY = 'example:last-active-at';
 const setLastActivity = () => {
@@ -38,12 +38,11 @@ router.beforeEach((to, from, next) => {
   const lastActivityAt = getLastActivity();
 
   const hasBeenActiveRecently = Boolean(
-    lastActivityAt && Date.now() - Number(lastActivityAt) < MAX_TIME_TO_RETURN,
-  );
+    lastActivityAt,
+  ) && Date.now() - lastActivityAt < MAX_TIME_TO_RETURN;
 
-  const shouldRedirect = Boolean(
-    to.path === '/' && isFirstTransition && lastRouteName && hasBeenActiveRecently,
-  );
+  const shouldRedirect = to.path === '/' && isFirstTransition
+  && Boolean(lastRouteName) && hasBeenActiveRecently;
 
   if (shouldRedirect) {
     isFirstTransition = false;
@@ -51,8 +50,6 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
-
-  isFirstTransition = false;
 });
 
 router.afterEach((to) => {
